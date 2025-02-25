@@ -1,0 +1,135 @@
+@font-face {
+    font-family: 'Galak';
+    src: url(/fonts/GalakPro.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+h2{
+    font-family: 'Galak';
+}
+
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    height: 60px;
+    background-color: #13293D;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    color: white;
+}
+
+.box{
+    flex: 1;
+    padding-top: 13%;
+    background-color: transparent;
+}
+
+.nav-right {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-right: 20px;
+}
+
+.nav-left{
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+
+.box-text-header{
+    font-family: 'Galak';
+    font-weight: 100px;
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background: #E8F1F2;
+}
+
+.container-vertical{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    background-color: transparent;
+    padding-bottom: 90px;
+}
+
+.container-horizontal{
+    display: flex;
+    flex-direction: column;
+    height: 20vh;
+    width: 20vw;
+    background-color: #247BA0;
+    box-shadow: 0 0 2PX black;
+    border-radius: 25px;
+    justify-content: center;
+}
+
+.container-horizonta{
+    display: flex;
+    flex-direction: column;
+}
+
+.butt{
+    margin-top: 10px;
+    font-family: 'Galak';
+    font-size: 25px;
+    height: 60px;
+    background: none; 
+    background-color: #1B98E0;
+    border-color: #f3f9ef;
+    border-style: solid;
+    border-radius: 20px;
+    color: white;
+}
+
+.butt:hover {
+    background-color: #247BA0;
+    color: white;
+}
+
+.text-box{
+    font-size: 25px;
+    height: 35px;
+    width: 1000px; 
+    border-radius: 8px; 
+}
+
+::-webkit-scrollbar{
+    width: 0;
+    background: transparent;
+}
+
+.padding{
+    padding: 9px;
+}
+
+.icon{
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 30px;
+    width: 30px;
+}
+
+a{
+    color: white;
+}
+
+h2{
+    margin: 0 5px;
+}

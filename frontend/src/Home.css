@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #01172F;
+    padding: 1rem;
+    color: white;
+    height: 60px;
+  }
+  
+  .logo {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .nav-buttons button {
+    margin: 0 10px;
+    padding: 10px 15px;
+    background-color: #00C6BC;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .nav-buttons button:hover {
+    background-color: #1B857F;
+  }
+  
+  .hero {
+    padding: 50px;
+    text-align: center;
+    color: #334B49;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  .hero1 {
+    background-image: url('hero1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+  }
+  
+  .hero2 {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .developer {
+    background-color: #00C6BC;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 200px;
+  }
+  
+  .developer img {
+    width: 100%;
+    border-radius: 50%;
+  }
+  
+  .hero3 {
+    background-image: url('hero3.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+  }
+  
+  .hero3 button {
+    padding: 10px 20px;
+    background-color: #1B857F;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .hero3 button:hover {
+    background-color: #334B49;
+  }
+  
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .close {
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+  }
+
+  .navlink-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #1B857F;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .navlink-button:hover {
+    background-color: #334B49;
+  }
