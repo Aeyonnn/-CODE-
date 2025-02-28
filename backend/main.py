@@ -15,7 +15,7 @@ cors = CORS(app, origins='*')
 @app.route("/api/algo", methods=["GET"])
 def algo():
     # Path to the dataset
-    dataset_path = r"C:\Users\R3v3rt\Documents\School\[THESIS] Veritasium\[CODE]\backend\train"
+    dataset_path = r"C:\Users\mat\Documents\4TH YEAR\veritasium\-CODE-\backend\train"
 
     # Initialize lists for images and labels
     images = []
@@ -61,13 +61,13 @@ def algo():
         y_pred = reg.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred) * 100
         
-        results.append({"model_name": reg.__class__.__name__, "accuracy": round(accuracy, 5)})
+        results.append({"model_name": reg.__class__.__name__, "prediction": "real" if y_pred[0] == 1 else "fake", "accuracy": accuracy})
         
     return jsonify(results)
 
 conn_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
-    "SERVER=.\SQLEXPRESS;"
+    "SERVER=DESKTOP-FQOOPV8\SQLEXPRESS;"
     "DATABASE=Thesis;"
     "Trusted_Connection=yes;"
 )
@@ -84,16 +84,16 @@ def register():
         with pyodbc.connect(conn_str) as conn:
             cursor = conn.cursor()    
             # Check if the username already exists
-            cursor.execute("SELECT * FROM USERS WHERE USERNAME = ?", (username,))
+            cursor.execute("SELECT * FROM [USER] WHERE USERNAME = ?", (username,))
             if cursor.fetchone():
                 return jsonify({"error": "Username already belongs to an account!"}), 400
             
             # Check if the email already exists
-            cursor.execute("SELECT * FROM USERS WHERE EMAIL = ?", (email,))
+            cursor.execute("SELECT * FROM [USER] WHERE EMAIL = ?", (email,))
             if cursor.fetchone():
                 return jsonify({"error": "Email already belongs to an account!"}), 400
             
-            cursor.execute("INSERT INTO USERS (USERNAME, EMAIL, PASSWORD) VALUES (?, ?, ?)", 
+            cursor.execute("INSERT INTO [USER] (USERNAME, EMAIL, PASSWORD) VALUES (?, ?, ?)", 
                         (username, email, password))
             conn.commit()
             return jsonify({"message": "Account creation successful!"}), 201
@@ -108,7 +108,7 @@ def login():
 
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?", (username, password))
+        cursor.execute("SELECT * FROM [USER] WHERE USERNAME = ? AND PASSWORD = ?", (username, password))
         user = cursor.fetchone()
         if user:
             return jsonify({"message": "Login successful!"}), 200

@@ -1,0 +1,92 @@
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    height: 3.75rem;
+    background-color: #13293D;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    color: white;
+}
+
+.nav-buttons button {
+    margin-top: 0.4rem;
+    margin-right: 1rem;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .nav-buttons button:hover {
+    background-color: #1B857F;
+  }
+
+.nav-right {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-right: 20px;
+}
+
+.nav-left{
+    margin-top: 0.8rem;
+    margin-left: 1rem;
+}
+
+.navlink-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #1B857F;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .navlink-button:hover {
+    background-color: #334B49;
+  }
+
+  @media (max-width: 1024px) {
+    .topnav{
+        justify-items: space-between;
+        align-content: space-around;
+    }
+    .nav-left{
+        display: none;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin: 0 1em;
+        width: 100%; /* Ensure it takes the full width */
+    }
+
+    .nav-right h2{
+        font-size: 0.9em;
+        margin: 0 5px;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: center; 
+        width: 100%; 
+      }
+
+    .nav-buttons button{
+        font-size: 1em;
+        margin: 0px;
+    }
+
+    .box h2{
+        font-size: 1.5em;
+    }
+
+    form{
+        width: 100%;
+    }
+  }

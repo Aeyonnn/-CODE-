@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from "axios";
 import "./Benchmark.css";
+import "./navbar.css";
 
 const Benchmark = () => {
     const [array, setArray] = useState([]);
@@ -32,14 +33,13 @@ const Benchmark = () => {
                 </div>
                 <div className="nav-right">
                     <h2>Hello, {username}!</h2>
-                    <img className="icon" src="icon.png" alt="User Icon" />
                     <h2>|</h2>
                     <h2>
-                        <NavLink className="Nav" to="/">Logout</NavLink>
+                        <NavLink to="/">Logout</NavLink>
                     </h2>
                 </div>
             </div>
-
+            
             <div className="box">
                 <form onSubmit={handlePredict}>    
                     <h2 className="box-text-header">Input News Article</h2>
@@ -64,7 +64,7 @@ const Benchmark = () => {
                         array.map((algo) => (
                             <div className="container-horizontal" key={algo.model_name}>
                                 <h2 className="container-text">
-                                    {algo.model_name}: {algo.accuracy}%
+                                    {algo.model_name}: {algo.prediction}
                                 </h2>
                                 <a href="https://www.geeksforgeeks.org/machine-learning-algorithms/" target="_blank" rel="noopener noreferrer">
                                     More Details
