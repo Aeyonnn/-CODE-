@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Home.css";
+import "./navbar.css";
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -15,9 +16,9 @@ const Home = () => {
 
   return (
     <div className="App">
-      <nav className="navbar">
-        <div className="logo" onClick={() => window.location.href = '/'}>
-          VERITASIUM
+      <nav className="topnav">
+        <div className="nav-left" onClick={() => window.location.href = '/'}>
+            <h2>VERITASIUM: FAKE NEWS DETECTION</h2>
         </div>
         <div className="nav-buttons">
           <button>Home</button>
@@ -26,12 +27,16 @@ const Home = () => {
         </div>
       </nav>
 
+
+
       <section className="hero hero1">
+        <div>
         <h1>Why Fake News Detection Matters</h1>
         <p>In today's digital age, misinformation spreads rapidly. Our mission is to combat fake news and promote truth.</p>
+        </div>
       </section>
 
-      <section className="hero hero2">
+      {/* <section className="hero hero2">
         <div className="developer">
           <img src="src/assets/aaron.jpg" alt="Aaron Alimbon" />
           <h2>Aaron Alimbon</h2>
@@ -42,13 +47,13 @@ const Home = () => {
           <h2>Matthew Centeno</h2>
           <p>Expert in machine learning and data analysis.</p>
         </div>
-      </section>
-
+      </section> */}
+      {/* 
       <section className="hero hero3">
         <h1>Start Benchmarking Today!</h1>
         <p>Join us in the fight against fake news. Click below to begin.</p>
         <button onClick={handleBenchmarkClick}>Benchmark</button>
-      </section>
+      </section> */}
 
       {showPopup && (
         <div className="popup">
