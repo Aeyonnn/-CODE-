@@ -4,66 +4,85 @@ import os
 import numpy as np
 from PIL import Image
 import pyodbc #this is for database
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+import joblib
 
 app=Flask(__name__)
 cors = CORS(app, origins='*')
 
-@app.route("/api/algo", methods=["GET"])
-def algo():
-    # Path to the dataset
-    dataset_path = r"C:\Users\R3v3rt\Documents\School\[THESIS] Veritasium\[CODE]\backend\train"
-
-    # Initialize lists for images and labels
-    images = []
-    labels = []
-
-    # Iterate through 'fake' and 'real' folders
-    for label in ['fake', 'real']:
-        folder_path = os.path.join(dataset_path, label)
-        for img_name in os.listdir(folder_path):
-            img_path = os.path.join(folder_path, img_name)
-            try:
-                # Load the image and resize to a fixed size (e.g., 64x64)
-                img = Image.open(img_path).resize((64, 64))
-                img_array = np.array(img)  # Convert image to a NumPy array
-                images.append(img_array)  # Append image data
-                labels.append(label)      # Append label
-            except Exception as e:
-                print(f"Error loading {img_path}: {e}")
-
-    # Convert lists to NumPy arrays
-    X = np.array(images)
-    y = np.array([1 if label == 'real' else 0 for label in labels])  # Convert labels to binary (1 for 'real', 0 for 'fake')
-
-    # Normalize pixel values to [0, 1]
-    X = X / 255.0
-
-    # Flatten images (if using traditional ML models)
-    X_flat = X.reshape(X.shape[0], -1)
-
-    # Split into training and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X_flat, y, test_size=0.2, random_state=42)
-
-    # Define models
-    models = [
-        LogisticRegression(solver='liblinear')
-    ]
+# LOAD PICKLE FILE
+def load_joblib_file(filepath):
+    try:
+        return joblib.load(filepath)
+    except Exception as e:
+        print(f"Error loading {filepath}: {e}")
+        return None
     
-    results = []
+# FOR PREPROCESSING THE IMAGE FOR PREDICTION
+def preprocess_image(image_path):
+    img = Image.open(image_path).resize((250, 250))
+    img_array = np.array(img) / 255.0  # Normalize pixel values to [0, 1]
+    img_flat = img_array.reshape(1, -1)  # Flatten the image
+    return img_flat
 
-    # Train and evaluate each model
-    for i in models:
-        reg = i.fit(X_train, y_train)
-        y_pred = reg.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred) * 100
-        
-        results.append({"model_name": reg.__class__.__name__, "accuracy": round(accuracy, 5)})
-        
-    return jsonify(results)
+def results(input):
+    if sum(input) >= 2:
+        print('Real')
+    else:
+        print('Fake')
+
+@app.route("/api/text-model", methods=["GET"])
+def text_model():
+    # LOADING MODELS FROM VERITASIUM AND ALETHEIA
+    neural_network = load_joblib_file('models/aletheia_neural_network.pkl')
+    random_forest = load_joblib_file('models/aletheia_random_forest.pkl')
+    decision_tree = load_joblib_file('models/aletheia_decision_tree.pkl')
+
+    aletheia_names = ['Neural Network', 'Random Forest', 'Decision Tree']
+    aletheia_models = [neural_network, random_forest, decision_tree]
+
+    text_data = ["On March 24, 2025, it has been confirmed that Phillippe James Catubig came out as gay, professing his love for his long time friend, Jermanine Pau Malveda."]
+
+    results_text = []
+    results_text_json = []
+    
+    for model in aletheia_models:
+        prediction_text = model.predict(text_data)
+        label_text = 1 if prediction_text[0] == 'REAL' else 0
+        results_text.append(label_text)
+        results_text_json.append({'id': aletheia_models.index(model), 'model': aletheia_names[aletheia_models.index(model)], 'prediction': prediction_text[0]})
+        print(f'The predicted label for the text {aletheia_names[aletheia_models.index(model)]}: {prediction_text[0]}')
+
+    return jsonify(results_text_json)
+
+@app.route("/api/image-model", methods=["GET"])
+def image_model():
+    # LOADING MODELS FROM VERITASIUM AND ALETHEIA
+    logistic_regression = load_joblib_file('models/veritasium_logistic_regression.pkl')
+    passive_aggressive_classifier = load_joblib_file('models/veritasium_passive_aggressive_classifier.pkl')
+    svc = load_joblib_file('models/veritasium_svc.pkl')
+
+    # STORE MODELS IN LISTS
+    veritasium_names = ['Logistic Regression', 'Passive Aggressive Classifier', 'Support Vector Classifier']
+    veritasium_models = [logistic_regression, passive_aggressive_classifier, svc]
+
+    # Path to the image you want to predict
+    image_path = r"C:\Users\mat\Downloads\Fake News Image Classifier.v8i.folder\test\fake\568c29f0190000c90178b1d5-260x146_jpeg.rf.4fcbe8ce4797b919a1f771d2e4671a10.jpg"
+
+    # Preprocess the image
+    x_image = preprocess_image(image_path)
+
+    results_image = []
+    results_image_json = []
+   
+    # Make a prediction for the image
+    for model in veritasium_models:
+        prediction_image = model.predict(x_image)
+        results_image.append(prediction_image[0])
+        label_image = 'real' if prediction_image[0] == 1 else 'fake'
+        results_image_json.append({'id': veritasium_models.index(model), 'model': veritasium_names[veritasium_models.index(model)], 'prediction': label_image})
+        print(f'The predicted label for the image by {veritasium_names[veritasium_models.index(model)]}: {label_image}')
+
+    return jsonify(results_image_json)
 
 conn_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
